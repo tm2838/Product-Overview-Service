@@ -1,0 +1,23 @@
+{
+  "name": "atelier-product-overview-service",
+  "version": "1.0.0",
+  "description": "A service to provide product information to the Atelier web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Sedeco/Product-Overview-Service.git"
+  },
+  "author": "Tingjun Man",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Sedeco/Product-Overview-Service/issues"
+  },
+  "homepage": "https://github.com/SDC-Sedeco/Product-Overview-Service#readme",
+  "dependencies": {
+    "jest": "^27.2.5",
+    "nodemon": "^2.0.13"
+  }
+}
