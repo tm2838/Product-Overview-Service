@@ -4,7 +4,8 @@
   "description": "A service to provide product information to the Atelier web app",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --collectCoverage",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
