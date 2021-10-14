@@ -2,8 +2,9 @@
   "name": "atelier-product-overview-service",
   "version": "1.0.0",
   "description": "A service to provide product information to the Atelier web app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "jest --collectCoverage",
     "lint": "eslint"
   },
