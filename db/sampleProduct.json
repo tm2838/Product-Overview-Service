@@ -1,0 +1,90 @@
+{
+  "category": "test-cat",
+  "default_price": "89.00",
+  "description": "this is a fake description",
+  "features": [
+    {
+      "feature": "test feature",
+      "value": "test value"
+    },
+    {
+      "feature": "test feature 2",
+      "value": "test value 2"
+    }
+  ],
+  "id": 12345,
+  "name": "test product name",
+  "slogan": "this is a fake slogan",
+  "styles": [
+    {
+      "default?": "true",
+      "name": "style1",
+      "original_price": "89.00",
+      "photos": [
+        {
+          "thumbnail_url": "fake-thumbnail-url",
+          "url": "fake-url"
+        },
+        {
+          "thumbnail_url": "another-fake-thumbnail-url",
+          "url": "another-fake-url"
+        },
+        {
+          "thumbnail_url": "third-fake-thumbnail-url",
+          "url": "third-fake-url"
+        },
+        {
+          "thumbnail_url": "fourth-fake-thumbnail-url",
+          "url": "fourth-fake-url"
+        },
+        {
+          "thumbnail_url": "fifth-fake-thumbnail-url",
+          "url": "fifth-fake-url"
+        },
+        {
+          "thumbnail_url": "sixth-fake-thumbnail-url",
+          "url": "sixth-fake-url"
+        }
+      ],
+      "sale_price": null,
+      "skus": {
+        "1": {
+          "quantity": 14,
+          "size": "7"
+        },
+        "2": {
+          "quantity": 2,
+          "size": "8.5"
+        }
+      },
+      "style_id": "67890"
+    },
+    {
+      "default?": "false",
+      "name": "style2",
+      "original_price": "67.00",
+      "photos": [
+        {
+          "thumbnail_url": "fake-thumbnail-url",
+          "url": "fake-url"
+        },
+        {
+          "thumbnail_url": "another-fake-thumbnail-url",
+          "url": "another-fake-url"
+        }
+      ],
+      "sale_price": null,
+      "skus": {
+        "1": {
+          "quantity": 14,
+          "size": "7"
+        },
+        "2": {
+          "quantity": 2,
+          "size": "8.5"
+        }
+      },
+      "style_id": "67891"
+    }
+  ]
+}
