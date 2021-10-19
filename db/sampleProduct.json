@@ -73,7 +73,7 @@
           "url": "another-fake-url"
         }
       ],
-      "sale_price": null,
+      "sale_price": "50.00",
       "skus": {
         "1": {
           "quantity": 14,
