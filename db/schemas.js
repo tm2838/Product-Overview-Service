@@ -36,11 +36,11 @@ const styleSchema = new Schema({
       url: String,
     },
   ],
-  skus: {
-    type: Map,
-    of: new Schema({
-      quantity: Number,
-      size: String,
-    }),
-  },
+});
+
+const skuSchema = new Schema({
+  id: Number,
+  style_id: Number,
+  size: String,
+  quantity: Number,
 });
