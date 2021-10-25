@@ -24,7 +24,7 @@ MongoClient.connect(url, (err, database) => {
     console.log('features created'); // eslint-disable-line
   });
 
-  db.createCollection('styles', (stylesCollectionError, stylesCollectionRes) => {
+  db.createCollection('init_styles', (stylesCollectionError, stylesCollectionRes) => {
     if (stylesCollectionError) {
       console.error(stylesCollectionError); // eslint-disable-line
     }
@@ -128,12 +128,12 @@ MongoClient.connect(url, (err, database) => {
       default_price: 1,
     },
     },
-    { $out: 'products' },
+    { $out: 'products' }, // ADD INDEX FOR ID
   ]);
 
   // concat styles, photos and skus together
-
-  db.styles.aggregate([
+  // break into two aggregations, which might be faster?
+  db.init_styles.aggregate([
     {
       $lookup: {
         from: 'photos',
@@ -164,115 +164,66 @@ MongoClient.connect(url, (err, database) => {
         },
       },
     },
-    {
-      $lookup: {
-        from: 'skus',
-        localField: 'style_id',
-        foreignField: 'styleId',
-        as: 'tempskus',
-      },
+    { $out: 'styles' },
+  ]);
+
+  db.close();
+});
+
+const getDB = () => MongoClient.connect(url, (err, database) => {
+  if (err) {
+      console.error(err); // eslint-disable-line
+  }
+  const db = database.db('test');
+  return db;
+});
+
+const getProduct = (productId) => getDB().products.findOne({ id: productId });
+
+const getStyles = (productId) => getDB().styles.aggregate([
+  {
+    $match: {
+      productId, // ADD INDEX FOR PRODUCTID
     },
-    {
-      $project: {
-        skus: {
-          $arrayToObject: {
-            $map: {
-              input: '$tempskus',
-              as: 'sku',
-              in: {
-                k: { $toString: '$$sku.id' },
-                v: {
-                  size: '$$sku.size',
-                  quantity: '$$sku.quantity',
-                },
+  },
+  {
+    $lookup: {
+      from: 'skus',
+      localField: 'style_id', // ADD INDEX FOR STYLE_ID
+      foreignField: 'styleId', // ADD INDEX FOR STYLEID
+      as: 'tempskus',
+    },
+  },
+  {
+    $project: {
+      skus: {
+        $arrayToObject: {
+          $map: {
+            input: '$tempskus',
+            as: 'sku',
+            in: {
+              k: { $toString: '$$sku.id' },
+              v: {
+                size: '$$sku.size',
+                quantity: '$$sku.quantity',
               },
             },
           },
         },
-        productId: 1,
-        style_id: 1,
-        name: 1,
-        sale_price: 1,
-        original_price: 1,
-        'default?': 1,
-        photos: 1,
       },
+      productId: 1,
+      style_id: 1,
+      name: 1,
+      sale_price: 1,
+      original_price: 1,
+      'default?': 1,
+      photos: 1,
     },
-    { $out: 'product_styles' },
-  ]);
+  },
+]);
 
-  // break into two aggregations, which might be faster?
-  // db.styles.aggregate([
-  //   {
-  //     $lookup: {
-  //       from: 'photos',
-  //       localField: 'id',
-  //       foreignField: 'styleId',
-  //       as: 'tempphotos',
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       photos: {
-  //         $map: {
-  //           input: '$tempphotos',
-  //           as: 'photo',
-  //           in: {
-  //             thumbnail_url: '$$photo.thumbnail_url',
-  //             url: '$$photo.url',
-  //           },
-  //         },
-  //       },
-  //       productId: 1,
-  //       style_id: '$id',
-  //       name: 1,
-  //       sale_price: 1,
-  //       original_price: 1,
-  //       'default?': {
-  //         $cond: [{ $eq: ['$default_style', 1] }, true, false],
-  //       },
-  //     },
-  //   },
-  //   { $out: 'temp_styles' },
-  // ]);
-
-  // db.temp_styles.aggregate([
-  //   {
-  //     $lookup: {
-  //       from: 'skus',
-  //       localField: 'style_id',
-  //       foreignField: 'styleId',
-  //       as: 'tempskus',
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       skus: {
-  //         $arrayToObject: {
-  //           $map: {
-  //             input: '$tempskus',
-  //             as: 'sku',
-  //             in: {
-  //               k: { $toString: '$$sku.id' },
-  //               v: {
-  //                 size: '$$sku.size',
-  //                 quantity: '$$sku.quantity',
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //       productId: 1,
-  //       style_id: 1,
-  //       name: 1,
-  //       sale_price: 1,
-  //       original_price: 1,
-  //       'default?': 1,
-  //       photos: 1,
-  //     },
-  //   },
-  //   { $out: 'product_styles' },
-  // ]);
-
-  db.close();
-});
+module.exports = {
+  getDB,
+  getProduct,
+  getStyles,
+};
