@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { getDB } = require('./db/index');
+const { getProduct, getStyles } = require('./db/index');
 
 const app = express();
 app.use(express.json());
@@ -12,7 +12,7 @@ app.get('/products', async (req, res) => {
   const indexOfProductId = req.params['0'].indexOf('/');
   const productId = req.params['0'].slice(indexOfProductId + 1);
   // get product data from database
-  getDB.products.findOne({ id: productId })
+  getProduct(productId)
     .then((results) => {
       res.send(results);
     })
@@ -23,7 +23,7 @@ app.get('/styles', async (req, res) => {
   const indexOfProductId = req.params['0'].indexOf('/');
   const productId = req.params['0'].slice(indexOfProductId + 1);
   // get style data from database
-  getDB.product_styles.find({ id: productId })
+  getStyles(productId)
     .then((results) => {
       res.send(results);
     })
