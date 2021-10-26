@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/SDC-Sedeco/Product-Overview-Service#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "express": "^4.17.1",
     "jest": "^27.2.5",

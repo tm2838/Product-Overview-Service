@@ -4,6 +4,7 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 const url = 'mongodb://localhost:27017/';
+
 MongoClient.connect(url, (err, database) => {
   if (err) {
     console.error(err); // eslint-disable-line
