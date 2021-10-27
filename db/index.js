@@ -171,19 +171,21 @@ const url = 'mongodb://127.0.0.1:27017/';
 //   db.close();
 // });
 
-let client;
+let connection;
 let db;
 
 const connectToDatabase = async () => {
-  client = new MongoClient(url);
-  await client.connect();
-  db = client.db('test');
+  connection = await MongoClient.connect(url, { useNewUrlParser: true });
+  db = await connection.db('test');
 };
 
-const getProduct = (productId) => db.collection('products').findOne({ id: parseInt(productId, 10) });
+const getProduct = (
+  productId,
+  collection,
+) => db.collection(collection).findOne({ id: parseInt(productId, 10) });
 
-const getStyles = (productId) => {
-  const aggCursor = db.collection('styles').aggregate([
+const getStyles = (productId, primaryCollection, secondaryCollection) => {
+  const aggCursor = db.collection(primaryCollection).aggregate([
     {
       $match: {
         productId: parseInt(productId, 10), // ADD INDEX FOR PRODUCTID
@@ -191,7 +193,7 @@ const getStyles = (productId) => {
     },
     {
       $lookup: {
-        from: 'skus',
+        from: secondaryCollection,
         localField: 'style_id', // ADD INDEX FOR STYLE_ID
         foreignField: 'styleId', // ADD INDEX FOR STYLEID
         as: 'tempskus',

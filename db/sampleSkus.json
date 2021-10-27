@@ -1,0 +1,26 @@
+[
+  {
+    "id" : 4,
+    "styleId" : 67890,
+    "size" : "L",
+    "quantity" : 10
+  },
+  {
+    "id" : 5,
+    "styleId" : 67890,
+    "size" : "S",
+    "quantity" : 6
+  },
+  {
+    "id" : 2,
+    "styleId" : 67891,
+    "size" : "7",
+    "quantity" : 14
+  },
+  {
+    "id" : 1,
+    "styleId" : 67891,
+    "size" : "8.5",
+    "quantity" : 7
+  }
+]

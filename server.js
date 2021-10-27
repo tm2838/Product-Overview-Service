@@ -12,7 +12,7 @@ connectToDatabase().then(() => {
   app.get('/product/:productId', async (req, res) => {
     const { productId } = req.params;
     // get product data from database
-    getProduct(productId)
+    getProduct(productId, 'products')
       .then((results) => {
         res.send(results);
       })
@@ -22,7 +22,7 @@ connectToDatabase().then(() => {
   app.get('/product/:productId/styles', async (req, res) => {
     const { productId } = req.params;
     // get style data from database
-    getStyles(productId)
+    getStyles(productId, 'styles', 'skus')
       .then((results) => {
         res.send(results);
       })
