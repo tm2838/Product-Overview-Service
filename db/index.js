@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-const { MongoClient } = require('mongodb');
-const csv = require('csv-parser');
-const fs = require('fs');
+// const { MongoClient } = require('mongodb');
+// const csv = require('csv-parser');
+// const fs = require('fs');
 
-const url = 'mongodb://127.0.0.1:27017/';
+// const url = 'mongodb://127.0.0.1:27017';
 
 // MongoClient.connect(url, (err, database) => {
 //   if (err) {
@@ -170,80 +170,3 @@ const url = 'mongodb://127.0.0.1:27017/';
 
 //   db.close();
 // });
-
-let connection;
-let db;
-
-const connectToDatabase = async () => {
-  connection = await MongoClient.connect(url, { useNewUrlParser: true });
-  db = await connection.db('test');
-};
-
-const getProduct = (
-  productId,
-  collection,
-) => db.collection(collection).findOne({ id: parseInt(productId, 10) });
-
-const getStyles = (productId, primaryCollection, secondaryCollection) => {
-  const aggCursor = db.collection(primaryCollection).aggregate([
-    {
-      $match: {
-        productId: parseInt(productId, 10), // ADD INDEX FOR PRODUCTID
-      },
-    },
-    {
-      $lookup: {
-        from: secondaryCollection,
-        localField: 'style_id', // ADD INDEX FOR STYLE_ID
-        foreignField: 'styleId', // ADD INDEX FOR STYLEID
-        as: 'tempskus',
-      },
-    },
-    {
-      $project: {
-        skus: {
-          $arrayToObject: {
-            $map: {
-              input: '$tempskus',
-              as: 'sku',
-              in: {
-                k: { $toString: '$$sku.id' },
-                v: {
-                  size: '$$sku.size',
-                  quantity: '$$sku.quantity',
-                },
-              },
-            },
-          },
-        },
-        productId: 1,
-        style_id: 1,
-        name: 1,
-        sale_price: 1,
-        original_price: 1,
-        'default?': 1,
-        photos: 1,
-      },
-    },
-  ]);
-
-  const styles = [];
-  const asyncGetStyles = async () => {
-    await aggCursor.forEach((style) => {
-      styles.push(style);
-    });
-
-    return new Promise((resolve, reject) => {
-      resolve(styles);
-    });
-  };
-
-  return asyncGetStyles();
-};
-
-module.exports = {
-  connectToDatabase,
-  db,
-  getProduct,
-  getStyles,
-};
