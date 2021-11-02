@@ -9,7 +9,7 @@ const sampleSkus = require('../db/sampleSkus.json');
 
 const { getProduct, getStyles } = require('../db/utils');
 
-const url = 'mongodb://127.0.0.1:27017/test';
+const url = 'mongodb://db:27017/test';
 
 describe('database utils', () => {
   // unit tests for database methods
