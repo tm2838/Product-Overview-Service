@@ -2,3 +2,5 @@ node_modules
 coverage/
 samples/
 .DS_Store
+fixtures/
+data/
