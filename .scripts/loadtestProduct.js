@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
+
 export const options = {
   stages: [
     { duration: '5s', target: 100 }, // below normal load
@@ -17,7 +18,7 @@ export const options = {
 
 export default function () {
   const rnd = Math.floor(Math.random() * 100000) + 900000;
-  const response = http.get(`http://localhost:5000/product/${rnd}/styles`);
+  const response = http.get(`http://localhost:5000/product/${rnd}`);
   check(response, {
       "is status 200": (r) => r.status === 200,
   })
