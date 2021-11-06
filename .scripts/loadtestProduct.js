@@ -3,17 +3,26 @@ import { check, sleep } from 'k6';
 
 
 export const options = {
-  stages: [
-    { duration: '5s', target: 100 }, // below normal load
-    { duration: '10s', target: 100 },
-    { duration: '5s', target: 500 }, // normal load
-    { duration: '10s', target: 500 },
-    { duration: '5s', target: 1000 }, // around the breaking point
-    { duration: '10s', target: 1000 },
-    { duration: '5s', target: 2000 }, // beyond the breaking point
-    { duration: '10s', target: 2000 },
-    { duration: '5s', target: 0 }, // scale down. Recovery stage.
-  ],
+  // stages: [
+  //   { duration: '1m', target: 10 }, // below normal load
+  //   { duration: '2m', target: 10 },
+  //   { duration: '1m', target: 100 }, // normal load
+  //   { duration: '2m', target: 100 },
+  //   { duration: '1m', target: 1000 }, // around the breaking point
+  //   { duration: '2m', target: 1000 },
+  //   { duration: '1m', target: 2000 }, // beyond the breaking point
+  //   { duration: '2m', target: 2000 },
+  //   { duration: '1m', target: 0 }, // scale down. Recovery stage.
+  // ],
+  scenarios: {
+    contacts: {
+      executor: 'constant-arrival-rate',
+      rate: 1000,
+      duration: '2m',
+      preAllocatedVUs: 50,
+      maxVUs: 1000,
+    },
+  },
 };
 
 export default function () {
