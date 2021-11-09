@@ -8,4 +8,8 @@ mongoimport --type csv -d test -c photos --headerline --drop productData/photos.
 
 mongoimport --type csv -d test -c skus --headerline --drop productData/skus.csv
 
-mongo < .scripts/transformData.sh
+mongo_user=$(grep MONGO_USER .env | cut -d '=' -f 2-)
+mongo_password=$(grep MONGO_PASSWORD .env | cut -d '=' -f 2-)
+mongo_url=$(grep MONGO_URL .env | cut -d '=' -f 2-)
+
+mongo -u $mongo_user -p $mongo_password $mongo_url < .scripts/transformData.sh
