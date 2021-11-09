@@ -1,12 +1,5 @@
-mongoimport --type csv -d test -c base_products --headerline --drop fixtures/product.csv
+use test
 
-mongoimport --type csv -d test -c features --headerline --drop fixtures/features.csv
-
-mongoimport --type csv -d test -c init_styles --headerline --drop fixtures/styles.csv
-
-mongoimport --type csv -d test -c photos --headerline --drop fixtures/photos.csv
-
-mongoimport --type csv -d test -c skus --headerline --drop fixtures/skus.csv
 db.base_products.createIndex({ id: 1});
 db.features.createIndex({product_id: 1});
 
@@ -85,3 +78,4 @@ db.init_styles.aggregate([
 db.styles.createIndex({productId: 1});
 db.styles.createIndex({style_id: 1});
 db.skus.createIndex({styleId: 1});
+
