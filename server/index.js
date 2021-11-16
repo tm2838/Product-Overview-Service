@@ -26,7 +26,7 @@ app.get('/product/:productId/styles', async (req, res) => {
     res.status(500).send(error);
   }
 
-  res.status(200).send({ results: styles });
+  res.status(200).send({ productId, results: styles });
 });
 
 app.listen(5000, () => {
