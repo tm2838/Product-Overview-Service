@@ -1,7 +1,7 @@
 const redis = require('redis');
 
 const redisPort = 6379;
-const client = redis.createClient({host: 'redis', port: redisPort});
+const client = redis.createClient({ host: 'redis', port: redisPort });
 client.on('error', (err) => {
   console.log(err); //eslint-disable-line
 });
@@ -48,7 +48,7 @@ app.get('/product/:productId/styles', async (req, res) => {
         res.status(200).send(JSON.parse(cachedStyles));
       } else {
         styles = await getStyles(productId);
-        client.hset('styles',`${productId}_styles`, JSON.stringify(styles));
+        client.hset('styles', `${productId}_styles`, JSON.stringify(styles));
         res.status(200).send({ productId, results: styles });
       }
     });

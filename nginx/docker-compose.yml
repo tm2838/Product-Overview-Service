@@ -1,0 +1,7 @@
+nginx:
+  build:
+    context: .
+    dockerfile: nginx.dockerfile
+  restart: always
+  ports:
+    - '8080:80'
