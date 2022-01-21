@@ -46,7 +46,12 @@ const getStyles = (productId) => Styles.aggregate([
   },
 ]);
 
+const getRelatedProducts = (
+  productId,
+) => Product.findOne({ id: parseInt(productId, 10) });
+
 module.exports = {
   getProduct,
   getStyles,
+  getRelatedProducts,
 };

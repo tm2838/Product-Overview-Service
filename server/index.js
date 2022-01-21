@@ -1,4 +1,4 @@
-const { getProduct, getStyles } = require('../db/utils');
+const { getProduct, getStyles, getRelatedProducts } = require('../db/utils');
 
 const app = require('./server');
 
@@ -27,6 +27,19 @@ app.get('/product/:productId/styles', async (req, res) => {
   }
 
   res.status(200).send({ productId, results: styles });
+});
+
+app.get('/product/:productId/related', async (req, res) => {
+  const { productId } = req.params;
+  // get style data from database
+  let relatedProducts;
+  try {
+    relatedProducts = await getRelatedProducts(productId);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+
+  res.status(200).send({ productId, results: relatedProducts });
 });
 
 app.listen(5000, () => {
