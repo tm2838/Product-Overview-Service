@@ -5,7 +5,7 @@ A microservice providing product data to an e-commerce website: [Atelier](https:
 ## Architecture
 <img width="1032" alt="Screen Shot 2022-01-19 at 1 58 20 PM" src="https://user-images.githubusercontent.com/43324065/150204631-b26a3b1d-d713-43cc-8178-95695331b1e6.png">
 
-## Tech Stacks
+## Tech Stack
 - Node.js
 - Express.js
 - MongoDB
