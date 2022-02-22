@@ -89,16 +89,22 @@ db.products.aggregate([
     },
   },
   {
-    $set:
-  {
-    related: {
-      $map: {
-        input: '$tempRelated',
-        as: 'related',
-        in: '$$related.related_product_id',
+    $project: {
+      related: {
+        $map: {
+          input: '$tempRelated',
+          as: 'related',
+          in: '$$related.related_product_id',
+        },
       },
+      id: 1,
+      name: 1,
+      slogan: 1,
+      description: 1,
+      category: 1,
+      default_price: 1,
+      features: 1,
     },
-  },
   },
   { $out: 'all_products' },
 ]);
