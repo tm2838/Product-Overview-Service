@@ -7,7 +7,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/test');
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:')); //eslint-disable-line
-// db.once('open', () => console.log('db connected!')); //eslint-disable-line
 
 const { Schema } = mongoose;
 const productSchema = new Schema({

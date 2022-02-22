@@ -3,7 +3,6 @@ const { getProduct, getStyles, getRelatedProducts } = require('../db/utils');
 const app = require('./server');
 
 app.get('/product/:productId', async (req, res) => {
-  console.log('Got a request!'); //eslint-disable-line
   const { productId } = req.params;
   // get product data from database
   let product;
