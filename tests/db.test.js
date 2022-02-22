@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 const { productSchema, styleSchema, skuSchema } = require('../db/schemas');
 
-const sampleProduct = require('../db/sampleProduct.json');
-const sampleStyles = require('../db/sampleStyles.json');
-const sampleSkus = require('../db/sampleSkus.json');
+const sampleProduct = require('../db/sampleData/sampleProduct.json');
+const sampleStyles = require('../db/sampleData/sampleStyles.json');
+const sampleSkus = require('../db/sampleData/sampleSkus.json');
 
 const { getProduct, getStyles } = require('../db/utils');
 

@@ -79,3 +79,32 @@ db.styles.createIndex({productId: 1});
 db.styles.createIndex({style_id: 1});
 db.skus.createIndex({styleId: 1});
 
+db.products.aggregate([
+  {
+    $lookup: {
+      from: 'related',
+      localField: 'id',
+      foreignField: 'current_product_id',
+      as: 'tempRelated',
+    },
+  },
+  {
+    $project: {
+      related: {
+        $map: {
+          input: '$tempRelated',
+          as: 'related',
+          in: '$$related.related_product_id',
+        },
+      },
+      id: 1,
+      name: 1,
+      slogan: 1,
+      description: 1,
+      category: 1,
+      default_price: 1,
+      features: 1,
+    },
+  },
+  { $out: 'all_products' },
+]);

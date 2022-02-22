@@ -1,5 +1,5 @@
 const frisby = require('frisby');
-const sampleProduct = require('../db/sampleProduct.json');
+const sampleProduct = require('../db/sampleData/sampleProduct.json');
 
 const dbhelpers = require('../db/utils');
 
